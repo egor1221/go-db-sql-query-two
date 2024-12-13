@@ -15,8 +15,6 @@ type Client struct {
 	Email    string
 }
 
-// String реализует метод интерфейса fmt.Stringer для Sale, возвращает строковое представление объекта Client.
-// Теперь, если передать объект Client в fmt.Println(), то выведется строка, которую вернёт эта функция.
 func (c Client) String() string {
 	return fmt.Sprintf("ID: %d FIO: %s Login: %s Birthday: %s Email: %s",
 		c.ID, c.FIO, c.Login, c.Birthday, c.Email)
@@ -30,12 +28,11 @@ func main() {
 	}
 	defer db.Close()
 
-	// добавление нового клиента
 	newClient := Client{
-		FIO:      "qweqer", // укажите ФИО
-		Login:    "wqeqweqw", // укажите логин
-		Birthday: "20020829", // укажите день рождения
-		Email:    "fwddd", // укажите почту
+		FIO:      "qweqer", 
+		Login:    "wqeqweqw", 
+		Birthday: "20020829", 
+		Email:    "fwddd", 
 	}
 
 	id, err := insertClient(db, newClient)
@@ -44,7 +41,6 @@ func main() {
 		return
 	}
 
-	// получение клиента по идентификатору и вывод на консоль
 	client, err := selectClient(db, id)
 	if err != nil {
 		fmt.Println(err)
@@ -52,15 +48,13 @@ func main() {
 	}
 	fmt.Println(client)
 
-	// обновление логина клиента
-	newLogin := "dddddddddddddddd" // укажите новый логин
+	newLogin := "dddddddddddddddd" 
 	err = updateClientLogin(db, newLogin, id)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	// получение клиента по идентификатору и вывод на консоль
 	client, err = selectClient(db, id)
 	if err != nil {
 		fmt.Println(err)
@@ -68,14 +62,12 @@ func main() {
 	}
 	fmt.Println(client)
 
-	// удаление клиента
 	err = deleteClient(db, id)
 	if err != nil {
 		fmt.Println(err)
 		return
 	}
 
-	// получение клиента по идентификатору и вывод на консоль
 	_, err = selectClient(db, id)
 	if err != nil {
 		fmt.Println(err)
